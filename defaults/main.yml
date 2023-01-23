@@ -1,0 +1,50 @@
+---
+# defaults file for ansible-role-win-fileshares
+
+# @var win_fileshares_install_features:description: Windows features to be installed
+# @var win_fileshares_install_features:example: >
+# win_fileshares_install_features:
+#   - "FS-FileServer"
+#   - "FS-DFS-Replication"
+# @end
+win_fileshares_install_features: []
+
+# @var win_fileshares_add:description: >
+# List of fileshares to be added. 
+# https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_share_module.html
+# @end
+# @var win_fileshares_add:example: >
+# win_fileshares_add:
+#   - name: hrshare
+#     caching_mode: "Manual"
+#     change: "HR-Manager"
+#     deny: "Ext-Users"
+#     description: "hr"
+#     encrypt: false
+#     full: "Administrators, CEO"
+#     list: true
+#     path: 'D:\shares\hr'
+#     read: "HR-Users"
+#     rule_action: "set"
+#   - name: marketingshare
+#     description: "marketing"
+#     path: 'C:\shares\marketing'
+#     list: true
+#     full: "Everyone"
+#   - name: $adminshare
+#     description: "admin"
+#     path: 'C:\shares\admin'
+#     list: false
+#     full: "Administrators"
+# @end
+win_fileshares_add: []
+
+# @var win_fileshares_remove:description: Fileshares to be removed
+# @var win_fileshares_remove:example: >
+# win_fileshares_remove:
+#   - "hrshare"
+#   - "marketingshare"
+#   - "$adminshare"
+# @end
+win_fileshares_remove: []
+...

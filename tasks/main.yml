@@ -1,0 +1,40 @@
+---
+# tasks file for ansible-role-win-fileshares
+- name: Install Windows feature 
+  ansible.windows.win_feature:
+    name: '{{ item }}'
+    state: present
+  loop: "{{ win_fileshares_install_features }}"
+  when: win_fileshares_install_features | length > 0
+
+- name: Ensure directories exist
+  ansible.windows.win_file:
+    path: '{{ item.path }}'
+    state: directory
+  loop: '{{ win_fileshares_add }}'
+  when: win_fileshares_add | length > 0
+
+- name: Add shares
+  ansible.windows.win_share:
+    name: "{{ item.name }}"
+    caching_mode: "{{ item.caching_mode | default(omit) }}"
+    change: "{{ item.change | default(omit) }}"
+    deny: "{{ item.deny | default(omit) }}"
+    description: "{{ item.description | default(omit) }}"
+    encrypt: "{{ item.encrypt | default(omit) }}"
+    full: "{{ item.full | default(omit) }}"
+    list: "{{ item.list | default(omit) }}"
+    path: "{{ item.path }}"
+    read: "{{ item.read | default(omit) }}"
+    rule_action: "{{ item.rule_action | default(omit) }}"
+    state: "present"  
+  loop: '{{ win_fileshares_add }}'
+  when: win_fileshares_add | length > 0
+
+- name: Remove shares
+  ansible.windows.win_share:
+    name: "{{ item }}"
+    state: absent
+  loop: "{{ win_fileshares_remove }}"
+  when: win_fileshares_remove | length > 0
+...
